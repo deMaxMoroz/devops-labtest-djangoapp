@@ -53,13 +53,11 @@ jobs:
             type=sha,prefix=${{ github.ref_name }}-
             latest
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      - name: Build and push Docker image with sudo
+        run: |
+          sudo docker build -t myimage .
+          sudo docker tag myimage ${{ env.REGISTRY }}/django-kubernetes-app:latest
+          sudo docker push ${{ env.REGISTRY }}/django-kubernetes-app:latest
 
   deploy:
     needs: build-and-push
