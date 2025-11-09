@@ -44,7 +44,7 @@ jobs:
           echo '{"insecure-registries":["192.168.1.80:5000"]}' > ~/.docker/daemon.json
           sudo systemctl restart docker || true
 
-      - name: Extract metadata for Docker
+      - name: Extract metadata for Docker image
         id: meta
         uses: docker/metadata-action@v5
         with:
